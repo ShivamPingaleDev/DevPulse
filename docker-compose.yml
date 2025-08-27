@@ -1,0 +1,6 @@
+version: '3'
+services:
+  searxng:
+    image: searxng/searxng
+    ports:
+      - "8080:8080"

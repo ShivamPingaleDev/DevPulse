@@ -1,69 +1,69 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# DevPulse – Meta Error Search Tool
 
-Currently, two official plugins are available:
+DevPulse is a React-based meta search tool for developers. It aggregates error messages and solutions from multiple sources (GitHub, Stack Overflow, Reddit, etc.) using SearXNG as a meta search engine.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
+- Search for error messages and get results from various developer communities.
+- Fast, unified interface for troubleshooting.
+- Backend proxy for CORS and API aggregation.
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Project Structure
+```
+devpulse/
+  backend/
+    server.js        # Node.js proxy server
+  src/
+    App.tsx          # Main React app
+    App.css          # Styles
+  public/
+    index.html       # HTML entry point
+  package.json       # Project dependencies
+  README.md          # Project documentation
+  docker-compose.yml # SearXNG container setup
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## SearXNG Setup
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+DevPulse uses SearXNG as a meta search engine. To run SearXNG locally, you can use Docker:
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+docker run -d -p 8080:8080 searxng/searxng
 ```
+
+Or use the included `docker-compose.yml` for one-step setup:
+
+```bash
+docker-compose up -d
+```
+
+This will start SearXNG on port 8080. The backend proxy will connect to it for search aggregation.
+
+## Getting Started
+
+### 1. Start SearXNG (see above)
+
+### 2. Start Backend Proxy
+```bash
+cd backend
+npm install
+node server.js
+```
+
+### 3. Start React Frontend
+```bash
+npm install
+npm run dev
+```
+
+### 4. Search for Errors
+- Enter your error message in the search bar.
+- Results will be fetched from SearXNG and displayed in the app.
+
+## Troubleshooting
+- If you see `Cannot GET /` on `localhost:5000`, visit `/search?q=your_error` instead.
+- Make sure SearXNG is running and accessible at `localhost:8080`.
+- Check backend logs for errors.
+
+## License
+MIT
