@@ -65,5 +65,9 @@ npm run dev
 - Make sure SearXNG is running and accessible at `localhost:8080`.
 - Check backend logs for errors.
 
+## latest commits
+- Network Error after user auth 
+- src/App.tsx - user token error
+
 ## License
 MIT
